@@ -1,6 +1,7 @@
 
 const dotenv = require('dotenv');
 const cors = require('cors')
+const fetch = require('node-fetch');
 dotenv.config();
 //console.log(`Your API key is ${process.env.API_KEY}`);
 var path = require('path')
@@ -11,16 +12,15 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static('dist'))
 app.use(cors())
-console.log(__dirname)
-//var AYLIENTextAPI = require('aylien_textapi');
-//var textapi = new AYLIENTextAPI({
-//  application_id:process.env.API_ID, 
-//  application_key: process.env.API_KEY
-//});
-var inputurl 
+//console.log(__dirname)
+let getCoordinates = require('./firstapi');
+let getWeather = require('./secondapi');
+let getImage = require('./thirdapi');
 var inputCity
-var inputDate
-const baseURL = 'http://api.geonames.org/searchJSON?q='
+
+var issummary
+var istemperature
+var imageurl
 app.get('/', function (req, res) {
     res.sendFile('dist/index.html')
 })
@@ -32,37 +32,33 @@ app.listen(8081, function () {
 })
 
 app.post('/test', function (req, res) {
-    inputDate = req.body.date;
+    const departtime = req.body.departtime;
+    const nowtime = req.body.nowtime;
     inputCity = req.body.city;
-    console.log(inputDate,inputCity)
-    //console.log('hooking up with ist!')
-    
-    //getCoordinates(baseURL,inputCity,zihantian)
-    //.then(function(res){
-    //    console.log(res);
-    //})
-    
-    
+    //console.log(inputCity, departtime, nowtime,'therererere')
+    getCoordinates(inputCity)
+    .then(data=>getWeather(data[0],data[1],departtime,nowtime)
+    )
+    .then(function(data){
+        issummary = data[0];
+        istemperature = data[1]
+        //console.log(issummary,istemperature)
+    })
+    .then(data=>getImage(inputCity))
+    .then(function(data){
+        imageurl = data;
+        //console.log(imageurl,'catch you!')
+        console.log({imageurl: imageurl, summary: issummary, temperature: istemperature});
+    })
+        
 })
-//const getCoordinates = async (baseURL, yourcity, username)=>{
-//const res = await fetch(`${baseURL}${yourcity}&maxRows=10&username=${username}`)
-//  try {
 
-    //const data = await res.json();
-    //console.log(data)
-    //console.log(data.main.temp)
-    //tempt = data.temperature;
- //   const lng = res.body.geonames[17];
- //   const lat = res.body.geonames[12];
- //   console.log(lng,lat);
- //   return data;
- // }  catch(error) {
- //   console.log("error", error);
-    // appropriately handle the error
-//  }
-//}
-//getCoordinates(baseURL,'London','zihantian')
-//.then(function(data){
-//    console.log('hook up with api')
-//})
+
+app.get('/all', function(req,res){
+    console.log('touch here')
+    res.send({imageurl: imageurl, summary: issummary, temperature: istemperature})
+});
+
+
+
 
