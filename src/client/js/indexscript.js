@@ -42,7 +42,7 @@ submitbutton.addEventListener('click',function(){
     //const departtime = new Date(formText.date).getTime() / 1000;
 
     
-    
+    //updateUI()
     postData('http://localhost:8081/test',formText)
     .then(data=>updateUI())
         
