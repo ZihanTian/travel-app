@@ -50,13 +50,16 @@ app.post('/test', function (req, res) {
         //console.log(imageurl,'catch you!')
         console.log({imageurl: imageurl, summary: issummary, temperature: istemperature});
     })
-        
+    .then(data=>function(){
+        res.send({imageurl: imageurl, summary: issummary, temperature: istemperature});    
+    })
+    
 })
 
 
 app.get('/all', function(req,res){
     console.log('touch here')
-    res.send({imageurl: imageurl, summary: issummary, temperature: istemperature})
+    res.send({imageurl: imageurl, summary: issummary, temperature: istemperature});
 });
 
 

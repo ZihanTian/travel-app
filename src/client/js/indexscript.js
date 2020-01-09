@@ -1,7 +1,19 @@
 //import updateUI from './updateUI';
 const submitbutton = document.getElementById('submit');
-
-submitbutton.addEventListener('click',function(){
+const secondbutton = document.getElementById('submit1');
+secondbutton.addEventListener('click', async function(){
+    const req = await fetch('http://localhost:8081/all')
+    console.log('get the request')
+    try{
+        const allData = await req.json()
+        console.log(allData,'here i am');
+        // update the UI........
+        
+    }catch(error){
+        console.log("error",error)
+    }
+})
+submitbutton.addEventListener('click',async function(){
     const nowtime = Math.round((new Date()).getTime() / 1000);
     const postData = async ( url = '', data = {})=>{
         console.log(data,'here')
@@ -43,15 +55,17 @@ submitbutton.addEventListener('click',function(){
 
     
     //updateUI()
+    //const getoutcome =  async () => {
+
+    //}
     postData('http://localhost:8081/test',formText)
     .then(data=>updateUI())
+    //.then(data=>data.json())
+    //.then(mydata=>console.log(mydata,'here'))
+    //const data = await res.json();
+    //console.log(data)
         
-    
-    
-    
-    
-    
-    
+ 
         
 });
 
