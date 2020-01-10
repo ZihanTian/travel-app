@@ -1,8 +1,10 @@
 
 async function getCoordinates (yourcity){
+    const dotenv = require('dotenv');
+    dotenv.config();
     const fetch = require('node-fetch');
     const baseURL = 'http://api.geonames.org/searchJSON?q=';
-    const username = 'ZihanTian';
+    const username = process.env.user_name;
     const res = await fetch(`${baseURL}${yourcity}&maxRows=10&username=${username}`)
     try {
 
