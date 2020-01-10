@@ -1,7 +1,10 @@
 async function getWeather (lng,lat,departtime,nowtime){
     const fetch = require('node-fetch');
     const baseURLDark = 'https://api.darksky.net/forecast/';
-    const Darkapikey = '99d9838d794f38deceedf7a1b281b874';
+    const dotenv = require('dotenv');
+    dotenv.config();
+    const Darkapikey = process.env.darkkey;
+
     // decide to fetch the future data or current data
     if(departtime-nowtime>604800){
         const res = await fetch(`${baseURLDark}${Darkapikey}/${lat},${lng},${departtime}`)

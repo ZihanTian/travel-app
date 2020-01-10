@@ -1,7 +1,10 @@
 
 async function getImage(whichcity){
     const baseURLimage = 'https://pixabay.com/api/?key=';
-    const imagekey = '14839721-018cdf8eb34520de807d662c3';
+    const dotenv = require('dotenv');
+    dotenv.config();
+    
+    const imagekey = process.env.imagekey;
     const fetch = require('node-fetch');
     const res = await fetch(`${baseURLimage}${imagekey}&q=${whichcity}`);
     try {
