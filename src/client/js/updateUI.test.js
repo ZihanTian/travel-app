@@ -1,3 +1,7 @@
+//import {
+//    updateUI
+   
+//} from "./updateUI";
 async function updateUI () {
     const fetch = require('node-fetch');
     const req = await fetch('http://localhost:8081/all')
@@ -18,4 +22,10 @@ async function updateUI () {
         console.log("error",error)
     }
 }
-module.exports = updateUI;
+const regeneratorRuntime = require("regenerator-runtime");
+test("It should return true", async() => {
+    expect(updateUI).toBeDefined();
+});
+test("It should be a function", async() => {
+    expect(typeof updateUI).toBe("function");
+});

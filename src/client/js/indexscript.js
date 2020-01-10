@@ -1,20 +1,10 @@
-//import updateUI from './updateUI';
+import updateUI from './updateUI';
 const submitbutton = document.getElementById('submit');
-const secondbutton = document.getElementById('submit1');
-secondbutton.addEventListener('click', async function(){
-    const req = await fetch('http://localhost:8081/all')
-    console.log('get the request')
-    try{
-        const allData = await req.json()
-        console.log(allData,'here i am');
-        // update the UI........
-        
-    }catch(error){
-        console.log("error",error)
-    }
-})
+
 submitbutton.addEventListener('click',async function(){
     const nowtime = Math.round((new Date()).getTime() / 1000);
+    const departtime = new Date(document.getElementById('myDate').value).getTime() /1000;
+    const returntime = new Date(document.getElementById('backDate').value).getTime() /1000;;
     const postData = async ( url = '', data = {})=>{
         console.log(data,'here')
           const res = await fetch(url, {
@@ -26,31 +16,33 @@ submitbutton.addEventListener('click',async function(){
           body: JSON.stringify(data), // body data type must match "Content-Type" header        
         });
           //console.log(res.body,'should finish the transform')
-          try {
-            const newData = await res.json();
-            console.log(newData,'new try hello');
-            return newData
-          }catch(error) {
-          console.log("error", error);
+          //try {
+           // const newData = await res.json();
+            //console.log(newData,'new try hello');
+           // return newData
+          //}catch(error) {
+         // console.log("error", error);
           // appropriately handle the error
-          }
+          //}
       }
-    const updateUI = async () => {
-        const req = await fetch('http://localhost:8081/all')
-        console.log('get the request')
-        try{
-            const allData = await req.json()
-            console.log(allData,'here i am');
+    //const updateUI = async () => {
+     //   const req = await fetch('http://localhost:8081/all')
+     //   console.log('get the request')
+     //   try{
+     //       const allData = await req.json()
+     //       console.log(allData,'here i am');
             // update the UI........
             
-        }catch(error){
-            console.log("error",error)
-        }
-    }
+      //  }catch(error){
+       //     console.log("error",error)
+       // }
+   // }
     // check what text was put into the form field
     const formText ={departtime:new Date(document.getElementById('myDate').value).getTime() /1000,
                      nowtime: Math.round((new Date()).getTime() / 1000),
-                     city:document.getElementById('myCity').value}; 
+                     city:document.getElementById('myCity').value,
+                     future: parseInt((departtime-nowtime)/(3600*24)),
+                     duration: parseInt((returntime-departtime)/(3600*24)) }; 
     //const departtime = new Date(formText.date).getTime() / 1000;
 
     
@@ -60,10 +52,6 @@ submitbutton.addEventListener('click',async function(){
     //}
     postData('http://localhost:8081/test',formText)
     .then(data=>updateUI())
-    //.then(data=>data.json())
-    //.then(mydata=>console.log(mydata,'here'))
-    //const data = await res.json();
-    //console.log(data)
         
  
         
