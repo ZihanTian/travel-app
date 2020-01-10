@@ -6,7 +6,7 @@ submitbutton.addEventListener('click',async function(){
     const departtime = new Date(document.getElementById('myDate').value).getTime() /1000;
     const returntime = new Date(document.getElementById('backDate').value).getTime() /1000;;
     const postData = async ( url = '', data = {})=>{
-        console.log(data,'here')
+        //console.log(data,'here')
           const res = await fetch(url, {
           method: 'POST', // *GET, POST, PUT, DELETE, etc.
           credentials: 'same-origin', // include, *same-origin, omit

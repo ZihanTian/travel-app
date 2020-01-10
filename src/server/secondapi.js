@@ -5,7 +5,7 @@ async function getWeather (lng,lat,departtime,nowtime){
     // decide to fetch the future data or current data
     if(departtime-nowtime>604800){
         const res = await fetch(`${baseURLDark}${Darkapikey}/${lat},${lng},${departtime}`)
-        console.log(`${baseURLDark}${Darkapikey}/${lat},${lng},${departtime}`)
+        //console.log(`${baseURLDark}${Darkapikey}/${lat},${lng},${departtime}`)
         try {
     
             const data = await res.json();
